@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Move : MonoBehaviour
+public class HorizontalMovement : MonoBehaviour
 {
     [SerializeField] float animationSmoothTime = 0.1f;
     [SerializeField] float playerSpeed = 2f;
@@ -43,15 +43,13 @@ public class Move : MonoBehaviour
         moveZAnimationParameterId = Animator.StringToHash("MoveZ");
     }
 
-    public Vector3 MovePlayer(Vector3 playerVelocity)
+    public Vector3 GetHorizontalMovement()
     {
+        setAnimationParameters();
         Vector2 input = moveAction.ReadValue<Vector2>();
         Vector3 move = getSmoothMovementVector(input);
         move = alignMovementWithCamera(move);
-        setAnimationParameters();
-        Vector3 newPlayerVelocity = move * playerSpeed * Time.deltaTime;
-        newPlayerVelocity.y = playerVelocity.y;
-        return newPlayerVelocity;
+        return move * playerSpeed * Time.deltaTime;
     }
 
     Vector3 alignMovementWithCamera(Vector3 move)
